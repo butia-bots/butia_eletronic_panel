@@ -1,10 +1,10 @@
 /*
- * Low Voltage Cutoff code
- * FurgBot Team, @home category - FURG
- * Author: Luís Felipe Milczarek Quadros
- * e-mail: luis.milczarek@hotmail.com
- * license: ?????
- */
+   Low Voltage Cutoff code
+   FurgBot Team, @home category - FURG
+   Author: Luís Felipe Milczarek Quadros
+   e-mail: luis.milczarek@hotmail.com
+   license: ?????
+*/
 
 #define V_MAX 27.7272727273
 #define POT_MAX V_MAX
@@ -27,17 +27,16 @@ void setup() {
 }
 
 void loop() {
-  if(state)
+
+  if (floatMap(analogRead(VOLTAGE_METER), 0.0f, 1023.0f, 0.0f, V_MAX) < targetVoltage && state)
   {
-    if(floatMap(analogRead(VOLTAGE_METER), 0.0f, 1023.0f, 0.0f, V_MAX) < targetVoltage)
-    {
-      digitalWrite(RELAY_OUTPUT, LOW);
-    }
-    else
-    {
-      digitalWrite(RELAY_OUTPUT, HIGH);
-    }
+    digitalWrite(RELAY_OUTPUT, LOW);
   }
+  else
+  {
+    digitalWrite(RELAY_OUTPUT, HIGH);
+  }
+
 
   Serial.print("Baterry Voltage = ");
   Serial.print(floatMap(analogRead(VOLTAGE_METER), 0.0f, 1023.0f, 0.0f, V_MAX));
@@ -46,7 +45,7 @@ void loop() {
   Serial.print(", New CutOff voltage = ");
   Serial.print(floatMap(analogRead(POT_INPUT_PIN), 0, 1023, POT_MIN, POT_MAX));
   Serial.print("V, State = ");
-  if(state)
+  if (state)
   {
     Serial.println("ON");
   }
@@ -54,7 +53,7 @@ void loop() {
   {
     Serial.println("OFF");
   }
-  
+
   delay(100);
 }
 
